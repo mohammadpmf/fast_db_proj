@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,13 +85,26 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fast_write_db',
-        'USER': 'grandbazaar',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int),
+    },
+    'replica': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('REPLICA_DB_NAME'),
+        'USER': config('REPLICA_DB_USER'),
+        'PASSWORD': config('REPLICA_DB_PASSWORD'),
+        'HOST': config('REPLICA_DB_HOST'),
+        'PORT': config('REPLICA_DB_PORT', cast=int),
+    },
 }
+
+DATABASES['default']['CONN_MAX_AGE'] = 600  # Persistent connection for 10 minutes
+DATABASES['replica']['CONN_MAX_AGE'] = 600
+
+DATABASE_ROUTERS = ['config.routers.PrimaryReplicaRouter']
 
 # DATABASES = {
 #     'default': {

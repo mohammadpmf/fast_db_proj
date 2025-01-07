@@ -5,7 +5,9 @@ from main.models.category import Category
 
 
 class Product(TimeStampMixin, GBSoftDeleteModel):
-    category = models.ForeignKey(to=Category, on_delete=models.PROTECT, null=True, blank=True)
+    category = models.ForeignKey(
+        to=Category, on_delete=models.PROTECT, null=True, blank=True
+    )
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=1000, null=True, blank=True)
     price = models.FloatField()

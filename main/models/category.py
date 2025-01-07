@@ -6,7 +6,9 @@ from main.models import GBSoftDeleteModel, TimeStampMixin
 class Category(TimeStampMixin, GBSoftDeleteModel):
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=1000, null=True, blank=True)
-    parent = models.ForeignKey(to='self', on_delete=models.PROTECT, null=True, blank=True)
+    parent = models.ForeignKey(
+        to="self", on_delete=models.PROTECT, null=True, blank=True
+    )
 
     def __str__(self):
         return self.get_full_name()

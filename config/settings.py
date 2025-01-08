@@ -101,8 +101,8 @@ DATABASES = {
     },
 }
 
-DATABASES['default']['CONN_MAX_AGE'] = 600  # Persistent connection for 10 minutes
-DATABASES['replica']['CONN_MAX_AGE'] = 600
+# DATABASES['default']['CONN_MAX_AGE'] = 600  # Persistent connection for 10 minutes
+# DATABASES['replica']['CONN_MAX_AGE'] = 600
 
 DATABASE_ROUTERS = ['config.routers.PrimaryReplicaRouter']
 
